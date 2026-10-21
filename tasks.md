@@ -27,7 +27,7 @@ How to use:
   (plus `CLAUDE.md` containing `@AGENTS.md` if using Claude Code).
   Done when: committed as `docs: add project requirements and agent instructions`.
 
-- [ ] **T0.4 Install Python 3.15**
+- [x] **T0.4 Install Python 3.15**
   `uv python install 3.15`
   Done when: `uv run --python 3.15 python --version` prints 3.15.x.
 
