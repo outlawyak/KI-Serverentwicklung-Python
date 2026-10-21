@@ -53,7 +53,7 @@ How to use:
   Insert a few test records in every table.
   Done when: schema and test data exist; SQL script is committed to the repo.
 
-- [ ] **T0.8 Connect DB browser**
+- [x] **T0.8 Connect DB browser**
   Connect a DB browser (e.g. DBeaver or pgAdmin) to the container.
   Done when: tables and test data are visible in the browser.
 
