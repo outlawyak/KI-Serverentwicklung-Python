@@ -77,7 +77,7 @@ How to use:
   globally installed one.
   Done when: `uv run pytest` reports Python 3.15 and the pinned pytest version.
 
-- [ ] **T1.4 Add GitHub Actions workflow**
+- [x] **T1.4 Add GitHub Actions workflow**
   Workflow triggered on push that runs `ruff check`, `ruff format --check`,
   `pyright` and `pytest`.
   Done when: the workflow passes on GitHub.
