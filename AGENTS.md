@@ -26,6 +26,15 @@ understandable and easy to review.
 - Docker with `docker-bake.hcl` for image variants
 - GitHub Actions for CI
 
+## Python 3.15 Compatibility (checked in T0.5)
+All planned packages install and import on Python 3.15.0: fastapi 0.157.0,
+uvicorn 0.54.0, pydantic 2.14.1, sqlalchemy 2.1.5, psycopg[binary] 3.3.6,
+httpx 0.28.1, pytest 9.1.1, ruff 0.17.1, pyright 1.1.414.
+
+- `fastapi.testclient` emits a `StarletteDeprecationWarning`: using `httpx`
+  with the test client is deprecated in favour of `httpx2`. It still works;
+  decide on `httpx` vs. `httpx2` when writing the tests (T5.1).
+
 ## Data Model
 The database schema already exists. Map it, do not redesign it.
 
@@ -45,6 +54,10 @@ The database schema already exists. Map it, do not redesign it.
 ## Workflow
 - Work in small, incremental steps: one task per prompt, one commit per task
 - Use Conventional Commits (`feat:`, `fix:`, `chore:`, `test:`, `docs:`, ...)
+- Every commit must be linked to a task in `tasks.md`: end the commit
+  subject with the task ID in parentheses, e.g.
+  `feat: add game model (T1.3)`. If a change does not belong to any task,
+  ask before committing instead of committing it unlinked
 - Before each commit, all of these must pass:
   - `uv run ruff check .`
   - `uv run ruff format --check .`

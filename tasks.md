@@ -7,6 +7,8 @@ How to use:
 - Work on one task at a time, in order
 - A task is done only when its "Done when" is met
 - Mark finished tasks with `[x]`, one Conventional Commit per task
+- Every commit references its task ID at the end of the subject,
+  e.g. `feat: add game model (T1.3)`
 - **[You]** = done by the developer, **[Agent]** = done by the AI agent,
   reviewed by the developer before committing
 
@@ -31,7 +33,7 @@ How to use:
   `uv python install 3.15`
   Done when: `uv run --python 3.15 python --version` prints 3.15.x.
 
-- [ ] **T0.5 Check Python 3.15 compatibility**
+- [x] **T0.5 Check Python 3.15 compatibility**
   In a throwaway folder, create a project with Python 3.15 and add all planned
   dependencies: fastapi, uvicorn, pydantic, sqlalchemy, a PostgreSQL driver
   (e.g. psycopg), pytest, httpx, ruff, pyright.
