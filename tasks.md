@@ -72,7 +72,12 @@ How to use:
   consistent with the ruff settings.
   Done when: file is committed.
 
-- [ ] **T1.3 Add GitHub Actions workflow**
+- [x] **T1.3 Add pytest as dev dependency**
+  `uv run pytest` must use the project's pytest on Python 3.15, not a
+  globally installed one.
+  Done when: `uv run pytest` reports Python 3.15 and the pinned pytest version.
+
+- [ ] **T1.4 Add GitHub Actions workflow**
   Workflow triggered on push that runs `ruff check`, `ruff format --check`,
   `pyright` and `pytest`.
   Done when: the workflow passes on GitHub.
