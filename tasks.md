@@ -41,7 +41,7 @@ How to use:
   Done when: all packages install and import on 3.15, or problems are noted
   in `AGENTS.md` (package, error, workaround or fallback decision).
 
-- [ ] **T0.6 Start PostgreSQL container**
+- [x] **T0.6 Start PostgreSQL container**
   PostgreSQL 18 or 19 as a Docker container, with a persistent volume.
   Done when: container runs and accepts connections.
 
