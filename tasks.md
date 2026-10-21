@@ -45,7 +45,7 @@ How to use:
   PostgreSQL 18 or 19 as a Docker container, with a persistent volume.
   Done when: container runs and accepts connections.
 
-- [ ] **T0.7 Create database schema**
+- [x] **T0.7 Create database schema**
   Tables as described in `AGENTS.md`:
   - `game` incl. `version` column for optimistic locking
   - `game_details` with unique FK to `game` (1:1)
