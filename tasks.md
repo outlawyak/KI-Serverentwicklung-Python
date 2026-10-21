@@ -67,7 +67,7 @@ How to use:
   Done when: `uv sync`, `uv run ruff check .` and `uv run pyright` run
   without errors.
 
-- [ ] **T1.2 Add .editorconfig**
+- [x] **T1.2 Add .editorconfig**
   Universal IDE configuration (indentation, line endings, charset),
   consistent with the ruff settings.
   Done when: file is committed.
