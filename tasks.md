@@ -145,6 +145,8 @@ How to use:
 
 - [ ] **T5.1 pytest integration tests**
   Integration tests for GET and POST against the real database.
+  Remove the placeholder `tests/test_placeholder.py` (added in T1.4 so
+  pytest does not exit with code 5 when no tests exist).
   Done when: `uv run pytest` passes locally and in CI.
 
 - [ ] **T5.2 Bruno collection** [You]
