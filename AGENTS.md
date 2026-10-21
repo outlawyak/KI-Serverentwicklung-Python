@@ -53,6 +53,9 @@ The database schema already exists. Map it, do not redesign it.
 
 ## Workflow
 - Work in small, incremental steps: one task per prompt, one commit per task
+- Never commit without the developer's explicit approval. After finishing a
+  task, stop, summarize the changes and propose a commit message; commit
+  only once the developer approves
 - Use Conventional Commits (`feat:`, `fix:`, `chore:`, `test:`, `docs:`, ...)
 - Every commit must be linked to a task in `tasks.md`: end the commit
   subject with the task ID in parentheses, e.g.
