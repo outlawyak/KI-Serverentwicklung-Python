@@ -61,7 +61,7 @@ How to use:
 
 ## Phase 1: Project Setup [Agent]
 
-- [ ] **T1.1 Create pyproject.toml**
+- [x] **T1.1 Create pyproject.toml**
   Initialize the project with uv for Python 3.15. `pyproject.toml` replaces
   `requirements.txt` and contains the configuration for uv, ruff and pyright.
   Done when: `uv sync`, `uv run ruff check .` and `uv run pyright` run

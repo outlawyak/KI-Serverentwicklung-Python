@@ -1,0 +1,45 @@
+[project]
+name = "ai-server"
+version = "0.1.0"
+description = "REST server prototype for the course AI-Assisted Server Development"
+requires-python = ">=3.15"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.414",
+    "ruff>=0.17.1",
+]
+
+[tool.uv]
+# Application, not a library: do not build or install the project itself.
+package = false
+required-version = ">=0.13"
+
+[tool.ruff]
+line-length = 88
+target-version = "py315"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.pyright]
+pythonVersion = "3.15"
+typeCheckingMode = "standard"
+venvPath = "."
+venv = ".venv"
+exclude = [".venv"]
