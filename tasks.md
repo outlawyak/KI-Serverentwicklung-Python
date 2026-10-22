@@ -117,7 +117,7 @@ How to use:
   Search/filter games via query parameters (e.g. title, genre).
   Done when: filters return the expected results.
 
-- [ ] **T3.4 Conditional GET**
+- [x] **T3.4 Conditional GET**
   Single-game GET supports conditional requests (e.g. ETag based on `version`
   plus `If-None-Match`, responding with 304 Not Modified).
   Done when: a repeated request with a matching header returns 304.

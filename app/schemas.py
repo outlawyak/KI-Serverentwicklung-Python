@@ -35,5 +35,5 @@ class GameResponse(BaseModel):
     release_date: date | None
     # Exposed so clients can send it back for lost-update protection (T3.6).
     version: int
-    details: GameDetailsResponse | None
-    reviews: list[ReviewResponse]
+    # Details and reviews are served separately (GET /games/{id}/details and
+    # /games/{id}/reviews), so changing them does not change the game's ETag.
