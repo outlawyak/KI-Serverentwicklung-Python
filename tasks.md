@@ -158,7 +158,7 @@ Image variants (both based on Debian 13 "trixie"):
   Done when: both targets build and the app runs in a container and can
   reach the database.
 
-- [ ] **T4.2 docker-bake.hcl**
+- [x] **T4.2 docker-bake.hcl**
   Bake file with a `dev` and a `prod` target (default group builds both).
   Done when: `docker buildx bake` builds both variants, and the prod image
   has no shell (`docker run --entrypoint sh <prod-image>` fails).
