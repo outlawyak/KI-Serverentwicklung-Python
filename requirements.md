@@ -40,18 +40,18 @@
 - Security via dependency injection
 
 ## Checklist
-- [ ] Team registered by email
-- [ ] Python 3.15.0 set up
-- [ ] PostgreSQL container with 1:1 and 1:N relationships
-- [ ] DB browser connected
-- [ ] Git repo created, incremental conventional commits
-- [ ] pyproject.toml with uv, ruff, type checker configured
-- [ ] .editorconfig added
-- [ ] docker-bake.hcl for image variants
-- [ ] GitHub Actions workflow running on push
-- [ ] FastAPI with dependency injection and Pydantic responses
-- [ ] GET (path/query params, conditional GET)
-- [ ] POST with validation
-- [ ] PUT with validation and lost-update protection
-- [ ] SQLAlchemy for DB access
-- [ ] Tests for GET and POST
+- [x] Team registered by email
+- [x] Python 3.15.0 set up
+- [x] PostgreSQL container with 1:1 and 1:N relationships
+- [x] DB browser connected
+- [x] Git repo created, incremental conventional commits
+- [x] pyproject.toml with uv, ruff, type checker configured
+- [x] .editorconfig added
+- [x] docker-bake.hcl for image variants
+- [x] GitHub Actions workflow running on push
+- [x] FastAPI with dependency injection and Pydantic responses
+- [x] GET (path/query params, conditional GET)
+- [x] POST with validation
+- [x] PUT with validation and lost-update protection
+- [x] SQLAlchemy for DB access
+- [x] Tests for GET and POST
