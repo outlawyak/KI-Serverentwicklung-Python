@@ -173,15 +173,15 @@ Image variants (both based on Debian 13 "trixie"):
   pytest does not exit with code 5 when no tests exist).
   Done when: `uv run pytest` passes locally and in CI.
 
-- [ ] **T5.2 Bruno collection** [You]
-  Requests for GET and POST, committed to the repo.
+- [x] **T5.2 Manual API test with Bruno** [You]
+  Send GET and POST requests to the local server with Bruno.
   Done when: all requests run successfully against the local server.
 
 ---
 
 ## Phase 6: Final Check [You]
 
-- [ ] **T6.1 Check against requirements**
+- [x] **T6.1 Check against requirements**
   Go through the checklist in `requirements.md` and tick every item.
   Done when: every requirement is met and all CI checks pass.
 
