@@ -167,7 +167,7 @@ Image variants (both based on Debian 13 "trixie"):
 
 ## Phase 5: Testing [Agent + You]
 
-- [ ] **T5.1 pytest integration tests**
+- [x] **T5.1 pytest integration tests**
   Integration tests for GET and POST against the real database.
   Remove the placeholder `tests/test_placeholder.py` (added in T1.4 so
   pytest does not exit with code 5 when no tests exist).

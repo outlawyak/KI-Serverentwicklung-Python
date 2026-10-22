@@ -33,13 +33,9 @@ All planned packages install and import on Python 3.15.0: fastapi 0.157.0,
 uvicorn 0.54.0, pydantic 2.14.1, sqlalchemy 2.1.5, psycopg[binary] 3.3.6,
 httpx 0.28.1, pytest 9.1.1, ruff 0.17.1, pyright 1.1.414.
 
-- `fastapi.testclient` emits a `StarletteDeprecationWarning`: using `httpx`
-  with the test client is deprecated in favour of `httpx2`. It still works;
-  decide on `httpx` vs. `httpx2` when writing the tests (T5.1).
-- Neither `httpx` nor `httpx2` is a project dependency yet, so importing
-  `fastapi.testclient` currently fails with a `RuntimeError` (checked with
-  fastapi 0.159.1, starlette 1.9.0). Add one of them as a dev dependency in
-  T5.1; until then, test endpoints manually against a running server.
+- `fastapi.testclient` needs `httpx2` (or the deprecated `httpx`, which
+  emits a `StarletteDeprecationWarning`). Decided in T5.1: `httpx2` is a dev
+  dependency, since starlette 1.9.0 prefers it and its type hints use it.
 
 ## Data Model
 The database schema already exists. Map it, do not redesign it.
