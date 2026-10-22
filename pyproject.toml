@@ -3,7 +3,12 @@ name = "ai-server"
 version = "0.1.0"
 description = "REST server prototype for the course AI-Assisted Server Development"
 requires-python = ">=3.15"
-dependencies = []
+dependencies = [
+    "fastapi>=0.157.0",
+    "psycopg[binary]>=3.3.6",
+    "sqlalchemy>=2.1.5",
+    "uvicorn>=0.54.0",
+]
 
 [dependency-groups]
 dev = [

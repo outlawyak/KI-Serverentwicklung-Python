@@ -86,7 +86,7 @@ How to use:
 
 ## Phase 2: Database Access [Agent]
 
-- [ ] **T2.1 Database configuration**
+- [x] **T2.1 Database configuration**
   Connection settings from environment variables, SQLAlchemy engine and
   session provided via FastAPI dependency injection.
   Done when: the app starts and can open a DB session.
