@@ -100,11 +100,11 @@ How to use:
 
 ## Phase 3: REST API [Agent]
 
-- [ ] **T3.1 Pydantic response models**
+- [x] **T3.1 Pydantic response models**
   Response models for Game incl. GameDetails and Reviews.
   Done when: models are used as `response_model` in the endpoints.
 
-- [ ] **T3.2 GET with path parameter**
+- [x] **T3.2 GET with path parameter**
   Fetch a single game by ID, 404 if not found.
   Done when: works for existing and missing IDs.
 
