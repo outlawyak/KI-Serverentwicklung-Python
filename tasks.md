@@ -122,8 +122,9 @@ How to use:
   plus `If-None-Match`, responding with 304 Not Modified).
   Done when: a repeated request with a matching header returns 304.
 
-- [ ] **T3.5 POST with validation**
-  Create a game; request body validated with Pydantic.
+- [x] **T3.5 POST with validation**
+  Create a game, and add a review to an existing game; request bodies
+  validated with Pydantic.
   Done when: valid data creates a record, invalid data is rejected with 422.
 
 - [ ] **T3.6 PUT with validation and lost-update protection**

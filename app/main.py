@@ -10,7 +10,13 @@ from sqlalchemy import func, select, text
 
 from app.database import SessionDep
 from app.models import Game, GameDetails, Review
-from app.schemas import GameDetailsResponse, GameResponse, ReviewResponse
+from app.schemas import (
+    GameCreate,
+    GameDetailsResponse,
+    GameResponse,
+    ReviewCreate,
+    ReviewResponse,
+)
 
 app = FastAPI(title="Games API")
 
@@ -38,6 +44,23 @@ def search_games(
     if genre is not None:
         query = query.where(func.lower(Game.genre) == genre.lower())
     return list(session.scalars(query))
+
+
+@app.post("/games", response_model=GameResponse, status_code=status.HTTP_201_CREATED)
+def create_game(
+    body: GameCreate, session: SessionDep, response: Response
+) -> GameResponse:
+    """Create a game from a validated body; invalid data is rejected with 422.
+
+    The response carries the new game's URL in Location and its ETag, so a
+    client can use it right away for conditional requests.
+    """
+    game = Game(**body.model_dump())
+    session.add(game)
+    session.commit()
+    response.headers["Location"] = f"/games/{game.id}"
+    response.headers["ETag"] = make_etag(game)
+    return GameResponse.model_validate(game)
 
 
 def make_etag(game: Game) -> str:
@@ -105,3 +128,22 @@ def get_game_reviews(game_id: int, session: SessionDep) -> list[Review]:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Game not found")
     query = select(Review).where(Review.game_id == game_id).order_by(Review.id)
     return list(session.scalars(query))
+
+
+@app.post(
+    "/games/{game_id}/reviews",
+    response_model=ReviewResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+def create_review(game_id: int, body: ReviewCreate, session: SessionDep) -> Review:
+    """Add a review to a game, 404 if the game does not exist.
+
+    Invalid data is rejected with 422. Reviews are not part of the game
+    response, so the game's version and ETag stay the same.
+    """
+    if session.get(Game, game_id) is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Game not found")
+    review = Review(game_id=game_id, **body.model_dump())
+    session.add(review)
+    session.commit()
+    return review
