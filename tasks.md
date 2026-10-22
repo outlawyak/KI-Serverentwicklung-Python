@@ -113,7 +113,7 @@ How to use:
   Fetch a single game by ID, 404 if not found.
   Done when: works for existing and missing IDs.
 
-- [ ] **T3.3 GET with query parameters**
+- [x] **T3.3 GET with query parameters**
   Search/filter games via query parameters (e.g. title, genre).
   Done when: filters return the expected results.
 
