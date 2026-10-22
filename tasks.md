@@ -91,7 +91,7 @@ How to use:
   session provided via FastAPI dependency injection.
   Done when: the app starts and can open a DB session.
 
-- [ ] **T2.2 SQLAlchemy models**
+- [x] **T2.2 SQLAlchemy models**
   Map the existing tables (`game`, `game_details`, `review`) incl. the 1:1
   and 1:N relationships. Do not change the schema.
   Done when: models load the test data correctly, incl. related objects.
