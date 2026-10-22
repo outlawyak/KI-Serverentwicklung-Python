@@ -1,6 +1,11 @@
 # Local development database (T0.6).
 # Start: docker compose up -d    Stop: docker compose down
 # Data survives `down`; only `docker compose down -v` deletes the volume.
+
+# Fixed project name, so the network is always `ai-server_default`,
+# whatever the repo folder is called.
+name: ai-server
+
 services:
   db:
     image: postgres:18
@@ -15,6 +20,8 @@ services:
     volumes:
       # PostgreSQL 18+ images keep their data below /var/lib/postgresql
       - db-data:/var/lib/postgresql
+      # Runs only when the volume is empty: creates the schema and test data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
