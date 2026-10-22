@@ -144,13 +144,24 @@ How to use:
 
 ## Phase 4: Docker [Agent]
 
+Image variants (both based on Debian 13 "trixie"):
+- **dev**: `debian:trixie-slim`, with shell and package manager (apt)
+- **prod**: `gcr.io/distroless/cc-debian13:nonroot`, without shell and
+  package manager. Not `distroless/python3-debian13`: it ships Debian's
+  Python 3.13, not 3.15. Python 3.15 (installed by uv) and the virtual
+  environment are copied in from a Debian 13 build stage instead.
+
 - [ ] **T4.1 Dockerfile for the app**
-  Done when: the image builds and the app runs in a container.
+  One multi-stage Dockerfile with a `dev` and a `prod` target as described
+  above. Only runtime dependencies in the image (no dev group), app runs
+  as a non-root user, DB settings come from environment variables.
+  Done when: both targets build and the app runs in a container and can
+  reach the database.
 
 - [ ] **T4.2 docker-bake.hcl**
-  Bake file to differentiate images (which variants is still open,
-  e.g. dev/prod; clarify with the lecturer).
-  Done when: `docker buildx bake` builds all defined variants.
+  Bake file with a `dev` and a `prod` target (default group builds both).
+  Done when: `docker buildx bake` builds both variants, and the prod image
+  has no shell (`docker run --entrypoint sh <prod-image>` fails).
 
 ---
 

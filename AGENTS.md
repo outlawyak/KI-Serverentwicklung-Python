@@ -23,7 +23,9 @@ understandable and easy to review.
 - ruff for linting and formatting
 - pyright as type checker
 - pytest for integration tests, Bruno as API client
-- Docker with `docker-bake.hcl` for image variants
+- Docker with `docker-bake.hcl` for image variants: `dev` on
+  `debian:trixie-slim` (shell and apt), `prod` on
+  `gcr.io/distroless/cc-debian13` (no shell, no package manager)
 - GitHub Actions for CI
 
 ## Python 3.15 Compatibility (checked in T0.5)
