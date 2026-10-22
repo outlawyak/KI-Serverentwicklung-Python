@@ -133,6 +133,13 @@ How to use:
   Done when: an update with an outdated version is rejected and does not
   overwrite data.
 
+- [x] **T3.7 POST for game details**
+  Create the details of an existing game via `POST /games/{id}/details`;
+  request body validated with Pydantic. 404 if the game does not exist,
+  409 if it already has details (1:1).
+  Done when: details are created once, a second POST is rejected with 409,
+  invalid data is rejected with 422.
+
 ---
 
 ## Phase 4: Docker [Agent]

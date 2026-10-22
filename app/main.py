@@ -7,11 +7,13 @@ from typing import Annotated
 
 from fastapi import FastAPI, Header, HTTPException, Response, status
 from sqlalchemy import func, select, text
+from sqlalchemy.exc import IntegrityError
 
 from app.database import SessionDep
 from app.models import Game, GameDetails, Review
 from app.schemas import (
     GameCreate,
+    GameDetailsCreate,
     GameDetailsResponse,
     GameResponse,
     ReviewCreate,
@@ -118,6 +120,40 @@ def get_game_details(game_id: int, session: SessionDep) -> GameDetails:
     details = session.scalars(query).one_or_none()
     if details is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Game details not found")
+    return details
+
+
+@app.post(
+    "/games/{game_id}/details",
+    response_model=GameDetailsResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+def create_game_details(
+    game_id: int, body: GameDetailsCreate, session: SessionDep, response: Response
+) -> GameDetails:
+    """Create the details of a game, 404 if the game does not exist.
+
+    A game has at most one details record, so a second POST is rejected with
+    409. Invalid data is rejected with 422.
+    """
+    already_exists = HTTPException(
+        status.HTTP_409_CONFLICT, detail="Game details already exist"
+    )
+    if session.get(Game, game_id) is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Game not found")
+    query = select(GameDetails.id).where(GameDetails.game_id == game_id)
+    if session.scalars(query).first() is not None:
+        raise already_exists
+    details = GameDetails(game_id=game_id, **body.model_dump())
+    session.add(details)
+    try:
+        session.commit()
+    except IntegrityError:
+        # A concurrent request created the details between the check above
+        # and this commit; the unique constraint on game_id rejected ours.
+        session.rollback()
+        raise already_exists from None
+    response.headers["Location"] = f"/games/{game_id}/details"
     return details
 
 

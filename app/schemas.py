@@ -5,8 +5,9 @@ the SQLAlchemy models in `app.models`.
 """
 
 from datetime import date, datetime
+from typing import Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class GameDetailsResponse(BaseModel):
@@ -59,3 +60,23 @@ class ReviewCreate(BaseModel):
     # Range matches the CHECK constraint in `db/schema.sql`.
     rating: int = Field(ge=1, le=5)
     comment: str | None = None
+
+
+class GameDetailsCreate(BaseModel):
+    # Same rules as GameCreate: unknown fields are rejected, whitespace is
+    # stripped.
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    # All columns are nullable, but empty strings are rejected; lengths match
+    # `db/schema.sql`.
+    description: str | None = Field(default=None, min_length=1)
+    developer: str | None = Field(default=None, min_length=1, max_length=100)
+    publisher: str | None = Field(default=None, min_length=1, max_length=100)
+
+    @model_validator(mode="after")
+    def check_not_empty(self) -> Self:
+        """Reject a body without any field, which would store an empty row."""
+        fields = (self.description, self.developer, self.publisher)
+        if all(value is None for value in fields):
+            raise ValueError("at least one field must be set")
+        return self
