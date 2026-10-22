@@ -1,0 +1,15 @@
+# Only pyproject.toml, uv.lock, .python-version and app/ are needed in the image.
+.git/
+.github/
+.venv/
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+.env
+.DS_Store
+.idea/
+.vscode/
+db/
+tests/
+*.md

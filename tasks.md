@@ -151,7 +151,7 @@ Image variants (both based on Debian 13 "trixie"):
   Python 3.13, not 3.15. Python 3.15 (installed by uv) and the virtual
   environment are copied in from a Debian 13 build stage instead.
 
-- [ ] **T4.1 Dockerfile for the app**
+- [x] **T4.1 Dockerfile for the app**
   One multi-stage Dockerfile with a `dev` and a `prod` target as described
   above. Only runtime dependencies in the image (no dev group), app runs
   as a non-root user, DB settings come from environment variables.
