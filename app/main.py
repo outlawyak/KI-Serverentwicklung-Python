@@ -8,6 +8,7 @@ from typing import Annotated
 from fastapi import FastAPI, Header, HTTPException, Response, status
 from sqlalchemy import func, select, text
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.exc import StaleDataError
 
 from app.database import SessionDep
 from app.models import Game, GameDetails, Review
@@ -16,6 +17,7 @@ from app.schemas import (
     GameDetailsCreate,
     GameDetailsResponse,
     GameResponse,
+    GameUpdate,
     ReviewCreate,
     ReviewResponse,
 )
@@ -82,6 +84,17 @@ def etag_matches(if_none_match: str, etag: str) -> bool:
     return etag in candidates
 
 
+def if_match_matches(if_match: str, etag: str) -> bool:
+    """Strong comparison as required for If-Match (RFC 9110, 13.1.1).
+
+    Weak tags (W/"...") never match, since they start with W/ and our ETags
+    are strong.
+    """
+    if if_match.strip() == "*":
+        return True
+    return etag in (tag.strip() for tag in if_match.split(","))
+
+
 @app.get(
     "/games/{game_id}",
     response_model=GameResponse,
@@ -108,6 +121,54 @@ def get_game(
             status_code=status.HTTP_304_NOT_MODIFIED, headers={"ETag": etag}
         )
     response.headers["ETag"] = etag
+    return GameResponse.model_validate(game)
+
+
+@app.put(
+    "/games/{game_id}",
+    response_model=GameResponse,
+    responses={
+        status.HTTP_412_PRECONDITION_FAILED: {"description": "Precondition Failed"},
+        status.HTTP_428_PRECONDITION_REQUIRED: {"description": "Precondition Required"},
+    },
+)
+def update_game(
+    game_id: int,
+    body: GameUpdate,
+    session: SessionDep,
+    response: Response,
+    if_match: Annotated[str | None, Header()] = None,
+) -> GameResponse:
+    """Replace a game, 404 if it does not exist; invalid data gets 422.
+
+    Lost-update protection: the request must send the ETag it last saw in
+    If-Match. Without it the response is 428, and if the game has changed
+    since (the ETag no longer matches) it is 412 and nothing is written.
+    """
+    if if_match is None:
+        raise HTTPException(
+            status.HTTP_428_PRECONDITION_REQUIRED, detail="If-Match header required"
+        )
+    game = session.get(Game, game_id)
+    if game is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Game not found")
+    stale = HTTPException(
+        status.HTTP_412_PRECONDITION_FAILED, detail="Game has been modified"
+    )
+    if not if_match_matches(if_match, make_etag(game)):
+        raise stale
+
+    for field, value in body.model_dump().items():
+        setattr(game, field, value)
+    try:
+        session.commit()
+    except StaleDataError:
+        # A concurrent request updated the game between the check above and
+        # this commit; the version in the UPDATE's WHERE clause no longer
+        # matched, so no row was written.
+        session.rollback()
+        raise stale from None
+    response.headers["ETag"] = make_etag(game)
     return GameResponse.model_validate(game)
 
 

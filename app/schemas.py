@@ -52,6 +52,19 @@ class GameCreate(BaseModel):
     release_date: date | None = None
 
 
+class GameUpdate(BaseModel):
+    # Same rules as GameCreate: unknown fields (incl. `version`, which comes
+    # from If-Match) are rejected, whitespace is stripped.
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    title: str = Field(min_length=1, max_length=200)
+    genre: str = Field(min_length=1, max_length=50)
+    # PUT replaces the whole game, so release_date has no default: a client
+    # has to send `null` explicitly to clear it instead of losing it by
+    # omission.
+    release_date: date | None
+
+
 class ReviewCreate(BaseModel):
     # Same rules as GameCreate: unknown fields are rejected, whitespace is
     # stripped.

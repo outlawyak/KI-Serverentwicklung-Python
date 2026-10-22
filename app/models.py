@@ -37,8 +37,12 @@ class Game(Base):
 
     # Optimistic locking: SQLAlchemy increments `version` on every UPDATE and
     # adds it to the WHERE clause, so a concurrent change raises
-    # StaleDataError instead of being overwritten.
-    __mapper_args__ = {"version_id_col": version}
+    # StaleDataError instead of being overwritten. New rows start at 0 like
+    # the column default (SQLAlchemy would start at 1).
+    __mapper_args__ = {
+        "version_id_col": version,
+        "version_id_generator": lambda v: 0 if v is None else v + 1,
+    }
 
 
 class GameDetails(Base):

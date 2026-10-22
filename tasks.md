@@ -127,7 +127,7 @@ How to use:
   validated with Pydantic.
   Done when: valid data creates a record, invalid data is rejected with 422.
 
-- [ ] **T3.6 PUT with validation and lost-update protection**
+- [x] **T3.6 PUT with validation and lost-update protection**
   Update a game; request body validated with Pydantic; concurrent updates
   are detected via `version` (e.g. `If-Match` header, 412 on mismatch).
   Done when: an update with an outdated version is rejected and does not
