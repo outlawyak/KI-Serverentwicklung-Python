@@ -34,6 +34,10 @@ httpx 0.28.1, pytest 9.1.1, ruff 0.17.1, pyright 1.1.414.
 - `fastapi.testclient` emits a `StarletteDeprecationWarning`: using `httpx`
   with the test client is deprecated in favour of `httpx2`. It still works;
   decide on `httpx` vs. `httpx2` when writing the tests (T5.1).
+- Neither `httpx` nor `httpx2` is a project dependency yet, so importing
+  `fastapi.testclient` currently fails with a `RuntimeError` (checked with
+  fastapi 0.159.1, starlette 1.9.0). Add one of them as a dev dependency in
+  T5.1; until then, test endpoints manually against a running server.
 
 ## Data Model
 The database schema already exists. Map it, do not redesign it.

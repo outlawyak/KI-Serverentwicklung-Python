@@ -82,6 +82,11 @@ How to use:
   `pyright` and `pytest`.
   Done when: the workflow passes on GitHub.
 
+- [x] **T1.5 Update test client notes**
+  Document in `AGENTS.md` that `fastapi.testclient` cannot be imported until
+  `httpx` or `httpx2` is added as a dev dependency (found during T3.2).
+  Done when: the note is in `AGENTS.md`.
+
 ---
 
 ## Phase 2: Database Access [Agent]
